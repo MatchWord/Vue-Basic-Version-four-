@@ -111,10 +111,10 @@ export default {
   height: 100%;
   width: 100%;
   overflow-y: auto;
-  // background-image: url('./img/back.png');
-  // background-position: center;
-  // background-repeat: no-repeat;
-  // background-size: contain;
+  background-image: url('./img/back.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 .vue-grid-layout {
   width:calc(100% - 10px);

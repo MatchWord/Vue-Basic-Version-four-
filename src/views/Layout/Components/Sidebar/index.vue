@@ -19,13 +19,7 @@
         <template v-for="item in routes">
           <template v-if="!item.hidden">
             <!-- no children -->
-            <template
-              v-if="
-                item.children.length === 1 &&
-                  !item.children[0].children &&
-                  !item.alwaysShow
-              "
-            >
+            <template v-if="item.children.length === 1 && !item.children[0].children && !item.alwaysShow">
               <el-menu-item
                 :index="item.path + '/' + item.children[0].path"
                 :key="item.path + '/' + item.children[0].path"

@@ -9,38 +9,47 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <template>
-        <!-- 路由搜索 -->
-        <header-search id="header-search" class="right-menu-item" />
-        <!-- 设置文本大小 -->
-        <el-tooltip content="文本大小" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
-        <!-- 全屏 -->
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-      </template>
-      <!-- 用户 -->
-      <el-dropdown class="avatar-container right-menu-item hover-effect"  :size="size">
-        <div class="avatar-wrapper">
-          <span class="user-avatar iconfont icon-yonghu"></span>
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item><i class="iconfont icon-shouyeyong"></i>首页</el-dropdown-item>
-          </router-link>
-          <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item><i class="iconfont icon-github"></i>Github</el-dropdown-item>
-          </a>
-            <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item><i class="iconfont icon-wendang"></i>文档</el-dropdown-item>
-          </a> -->
-          <el-dropdown-item divided >
-            <span  style="display:block;" @click="logout"><i class="iconfont icon-084tuichu"></i>退出登陆</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-        
-      </el-dropdown>
+      <ul class="right-menu-ul">
+        <li class="right-menu-li">
+          <!-- 路由搜索 -->
+          <header-search id="header-search" class="right-menu-item" />
+        </li>
+        <li class="right-menu-li">
+          <!-- 设置文本大小 -->
+          <el-tooltip content="文本大小" effect="dark" placement="bottom">
+            <size-select id="size-select" class="right-menu-item hover-effect" />
+          </el-tooltip>
+        </li>
+        <li class="right-menu-li">
+          <!-- 全屏 -->
+          <screenfull id="screenfull" class="right-menu-item hover-effect" />
+        </li>
+        <li class="right-menu-li">
+          <!-- 用户 -->
+          <el-dropdown class="avatar-container right-menu-item hover-effect"  :size="size">
+            <div class="avatar-wrapper">
+              <span class="user-avatar iconfont icon-yonghu"></span>
+              <i class="el-icon-caret-bottom" />
+            </div>
+            <el-dropdown-menu slot="dropdown" class="user-dropdown">
+              <router-link to="/">
+                <el-dropdown-item><i class="iconfont icon-shouyeyong"></i>首页</el-dropdown-item>
+              </router-link>
+              <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
+                <el-dropdown-item><i class="iconfont icon-github"></i>Github</el-dropdown-item>
+              </a>
+                <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+                <el-dropdown-item><i class="iconfont icon-wendang"></i>文档</el-dropdown-item>
+              </a> -->
+              <el-dropdown-item divided >
+                <span  style="display:block;" @click="logout"><i class="iconfont icon-084tuichu"></i>退出登陆</span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+            
+          </el-dropdown>
+        </li>
+        <li class="right-menu-li"></li>
+      </ul>
     </div>
   </div>
 </template>
@@ -78,14 +87,15 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  height: 50px;
+  height: 35px;
   overflow: hidden;
   position: relative;
-  background: #fff;
+  background-color: #e5e5e5;
+  border-bottom: 1px solid #d9d9d9;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .hamburger-container {
-    line-height: 46px;
+    line-height: 35px;
     height: 100%;
     float: left;
     cursor: pointer;
@@ -106,55 +116,32 @@ export default {
   }
 
   .right-menu {
+    height: 35px;
     float: right;
-    height: 100%;
-    line-height: 50px;
 
-    &:focus {
-      outline: none;
-    }
+    .right-menu-ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
 
-    .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
-      height: 100%;
-      font-size: 18px;
-      color: #5a5e66;
-      vertical-align: text-bottom;
-
-      &.hover-effect {
+      li {
+        font-size: 1rem;
+        display: inherit;
+        align-items: center;
+        justify-content: center;
+        flex: 1 auto;
+        padding: 0 15px;
         cursor: pointer;
-        transition: background 0.3s;
+        font-size: 12px;
 
         &:hover {
-          background: rgba(0, 0, 0, 0.025);
+          background-color: #f1f1f1;
         }
-      }
-    }
-
-    .avatar-container {
-      margin-right: 30px;
-
-      .avatar-wrapper {
-        position: relative;
-
-        .user-avatar {
-          cursor: pointer;
-          font-size: 20px;
-        }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
-        }
-      }
-      .user-dropdown {
-        .iconfont {
-          padding-right: 8px;
-          font-size: 12px;
+        .el-icon {
+          margin-right: 5px;
         }
       }
     }

@@ -3,10 +3,11 @@
     <!-- 遮罩层 -->
     <div class="rightPanel-background" />
     <div class="rightPanel">
+      <i class="el-icon el-icon-setting"></i>设置
       <!-- 按钮 -->
-      <div class="handle-button" :style="{'top':buttonTop+'px','background-color':theme}" @click="show=!show">
+      <!-- <div class="handle-button" :style="{'top':buttonTop+'px','background-color':theme}" @click="show=!show">
         <i :class="show ? 'el-icon-close' : 'el-icon-setting'" />
-      </div>
+      </div> -->
       <!-- 插入内容 -->
       <div class="rightPanel-items">
         <slot />

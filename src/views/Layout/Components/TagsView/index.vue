@@ -231,9 +231,8 @@ export default {
 .tags-view-container {
   height: 34px;
   width: 100%;
-  background: #fff;
-  border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+  background-color: #f2f2f2;
+  box-shadow: 10px 0 15px -6px rgba(0, 0, 0, 0.4) inset;
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;

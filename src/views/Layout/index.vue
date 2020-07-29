@@ -14,11 +14,14 @@
           <tags-view v-if="tagsView" />
         </div>
         <app-main />
-        <right-panel v-if="showSettings" >
+        <!-- <right-panel v-if="showSettings" >
           <settings />
-        </right-panel>
+        </right-panel> -->
       </div>
     </el-scrollbar>
+    <!-- 全局遮罩 -->
+    <global-mask />
+    <notification-bar :notificationInfo="notificationInfo" />
   </div>
 </template>
 
@@ -49,9 +52,13 @@ import TagsView from "./Components/TagsView"
 import settings from "./Components/Settings"
 // 引入头部的菜单栏
 import sidebarHorizontal from "./Components/sidebarHorizontal";
+// 引入遮罩层
+import GlobalMask from "./Components/BasicSetting/GlobalMask"
+// 基础提示
+import NotificationBar from "./Components/BasicSetting/NotificationBar"
 export default {
   name: "Layout",
-  components: { sidebar, Navbar, AppMain, TagsView, RightPanel, settings, sidebarHorizontal },
+  components: { sidebar, Navbar, AppMain, TagsView, RightPanel, settings, sidebarHorizontal, GlobalMask, NotificationBar },
   computed: {
     // 使用对象展开运算符将此对象混入到外部对象中
     ...mapGetters(["sidebar", "device", "fixedHeader", "tagsView", "showSettings", "showNavMenu", "navColor", "mode"]),
@@ -65,6 +72,15 @@ export default {
     // 样式变量
     variables() {
       return variables;
+    }
+  },
+  data () {
+    return {
+      notificationInfo: {
+        Width: 250,
+        dark: true,
+        component: settings
+      }
     }
   },
   methods: {}

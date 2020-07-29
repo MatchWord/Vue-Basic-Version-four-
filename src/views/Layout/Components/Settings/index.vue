@@ -1,6 +1,13 @@
 <template>
   <div class="drawer-container">
     <div>
+      <div class="greeting">
+        <h2>{{ dayTime }}好,</h2>
+        <span>{{ name }}</span>
+      </div>
+      <div class="clock">
+        <canvasClock />
+      </div>
       <h3 class="drawer-title">导航模式</h3>
       <div class="drawer-item-box">
         <!-- 垂直模式 -->
@@ -67,20 +74,46 @@
         <span>开启侧边栏</span>
         <el-switch v-model="showNavMenu" class="drawer-switch" />
       </div>
+      <div class="bottomFlex">
+        <ul>
+          <li @click="fullScreeModel">
+            <span class="iconfont icon-quanping"></span>
+            <span>全屏展示</span>
+          </li>
+          <li @click="logout">
+            <span class="iconfont icon-084tuichu"></span>
+            <span>注销登录</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+import { mapGetters } from 'vuex'
+import screenfull from 'screenfull'
 import ThemePicker from '@/components/ThemePicker'
+import canvasClock from '@/components/canvasClock/clock'
 import { setLocalStorage, getLocalStorage } from '@/utils/session.js'
+
 export default {
-  components: { ThemePicker },
+  components: { ThemePicker, canvasClock },
   data() {
     return {
       mode: getLocalStorage('mode') || 'vertical',
-      navColor: getLocalStorage('navColor') || 'dark'
+      navColor: getLocalStorage('navColor') || 'dark',
+      dayTime: '',
+      name: ''
     }
+  },
+  mounted () {
+    this.dayTime = this.getGreetingTime()
+    this.init()
+  },
+  computed: {
+    ...mapGetters(['name'])
   },
   computed: {
     themeColor () {
@@ -158,7 +191,47 @@ export default {
       })
       setLocalStorage('navColor', val)
       this.navColor = val
+    },
+    getGreetingTime () {
+      const now = parseInt(moment().format('HH'))
+      let dayTime = ''
+      if (now < 12) dayTime = '早上'
+      else if (now >= 12 && now < 18) dayTime = '下午'
+      else if (now >= 18 && now <= 23) dayTime = '晚上'
+      else dayTime = ''
+      return dayTime
+    },
+    fullScreeModel () {
+      if (!screenfull.enabled) {
+        this.$message({
+          message: 'you browser can not work',
+          type: 'warning'
+        })
+        return false
+      }
+      screenfull.toggle()
+    },
+    init() {
+      if (screenfull.enabled) {
+        screenfull.on('change', this.change)
+      }
+    },
+    destroy() {
+      if (screenfull.enabled) {
+        screenfull.off('change', this.change)
+      }
+    },
+    async logout() {
+      await this.$store.dispatch("user/logout")
+      this.$router.push(`/login`)
+      this.$store.dispatch('settings/changeSetting', {
+        key: 'showSettings',
+        value: false
+      })
     }
+  },
+  beforeDestroy() {
+    this.destroy()
   }
 }
 </script>
@@ -172,7 +245,7 @@ export default {
 
   .drawer-title {
     margin-bottom: 12px;
-    color: rgba(0, 0, 0, .85);
+    color: #ffffff;
     font-size: 14px;
     line-height: 22px;
     border-top: 1px solid #e8e8e8;
@@ -184,7 +257,7 @@ export default {
   }
 
   .drawer-item {
-    color: rgba(0, 0, 0, .65);
+    color: #ffffff;
     font-size: 14px;
     padding: 12px 0;
     overflow: auto;
@@ -263,6 +336,71 @@ export default {
       }
     }
   }
-  
+  .greeting {
+    padding: 0;
+    background: none;
+    color: #ffffff;
+    > * {
+      display: inline-block;
+      font-weight: 400;
+    }
+
+    h2 { font-size:1.5rem; }
+
+    span { font-size:1.2rem; }
+  }
+
+  .clock {
+    height:150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .bottomFlex {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      
+      li {
+        flex: 1;
+        position: relative;
+        display: inherit;
+        height: 60px;
+        transition: all .2s ease;
+        cursor: pointer;
+        background: rgba(255,255,255,.1);
+        margin:2px;
+        box-sizing: border-box;
+        color: #ffffff;
+        &:hover {
+          background: rgba(255,255,255,.2);
+        }
+
+        &:active {
+          transform: scale(.97)
+        }
+
+        span:first-child {
+          position: absolute;
+          left:6px;
+          top:8px;
+        }
+
+        span:last-child {
+          position: absolute;
+          left:6px;
+          bottom: 5px;
+        }
+
+      }
+
+    }
+  }
 }
 </style>

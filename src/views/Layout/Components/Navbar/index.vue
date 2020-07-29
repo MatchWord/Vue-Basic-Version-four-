@@ -11,44 +11,16 @@
     <div class="right-menu">
       <ul class="right-menu-ul">
         <li class="right-menu-li">
-          <!-- 路由搜索 -->
           <header-search id="header-search" class="right-menu-item" />
         </li>
         <li class="right-menu-li">
-          <!-- 设置文本大小 -->
           <el-tooltip content="文本大小" effect="dark" placement="bottom">
             <size-select id="size-select" class="right-menu-item hover-effect" />
           </el-tooltip>
         </li>
-        <li class="right-menu-li">
-          <!-- 全屏 -->
-          <screenfull id="screenfull" class="right-menu-item hover-effect" />
+        <li class="right-menu-li" @click="setShowSetting">
+          <i class="iconfont icon-shezhi"></i>设置
         </li>
-        <li class="right-menu-li">
-          <!-- 用户 -->
-          <el-dropdown class="avatar-container right-menu-item hover-effect"  :size="size">
-            <div class="avatar-wrapper">
-              <span class="user-avatar iconfont icon-yonghu"></span>
-              <i class="el-icon-caret-bottom" />
-            </div>
-            <el-dropdown-menu slot="dropdown" class="user-dropdown">
-              <router-link to="/">
-                <el-dropdown-item><i class="iconfont icon-shouyeyong"></i>首页</el-dropdown-item>
-              </router-link>
-              <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-                <el-dropdown-item><i class="iconfont icon-github"></i>Github</el-dropdown-item>
-              </a>
-                <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-                <el-dropdown-item><i class="iconfont icon-wendang"></i>文档</el-dropdown-item>
-              </a> -->
-              <el-dropdown-item divided >
-                <span  style="display:block;" @click="logout"><i class="iconfont icon-084tuichu"></i>退出登陆</span>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-            
-          </el-dropdown>
-        </li>
-        <li class="right-menu-li"></li>
       </ul>
     </div>
   </div>
@@ -58,14 +30,13 @@
 import { mapGetters } from "vuex";
 // comp 面包屑 全屏 文本大小
 import Breadcrumb from "./Comp/Breadcrumb"
-import Screenfull from './Comp/Screenfull'
-import SizeSelect from './Comp/SizeSelect'
 import HeaderSearch from './Comp/HeaderSearch'
+import SizeSelect from './Comp/SizeSelect'
+
 export default {
   name: "Navbar",
   components: {
     Breadcrumb,
-    Screenfull,
     SizeSelect,
     HeaderSearch
   },
@@ -77,9 +48,11 @@ export default {
     toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
     },
-    async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login`);
+    setShowSetting () {
+      this.$store.dispatch('settings/changeSetting', {
+        key: 'showSettings',
+        value: true
+      })
     }
   }
 };
@@ -120,13 +93,13 @@ export default {
     float: right;
 
     .right-menu-ul {
+      height: 35px;
       list-style: none;
       padding: 0;
       margin: 0;
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
-
       li {
         font-size: 1rem;
         display: inherit;
@@ -142,6 +115,11 @@ export default {
         }
         .el-icon {
           margin-right: 5px;
+        }
+        .iconfont {
+          font-size: 12px;
+          margin-right: 5px;
+          margin-top: -2px;
         }
       }
     }

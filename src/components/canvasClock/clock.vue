@@ -7,7 +7,7 @@ export default {
   name: 'canvasClock',
   data () {
     return {
-      size: 180,
+      size: 150,
       clockRef: null,
       width: '',
       height: '',

@@ -7,8 +7,12 @@
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="navColor === 'dark' ? variables.menuBg : variables.menuBgligth"
-        :text-color="navColor === 'dark' ? variables.menuText : variables.menuTextlight"
+        :background-color="
+          navColor === 'dark' ? variables.menuBg : variables.menuBgligth
+        "
+        :text-color="
+          navColor === 'dark' ? variables.menuText : variables.menuTextlight
+        "
         :active-text-color="theme || variables.menuActiveText"
         :collapse-transition="true"
         :unique-opened="false"
@@ -19,7 +23,13 @@
         <template v-for="item in routes">
           <template v-if="!item.hidden">
             <!-- no children -->
-            <template v-if="item.children.length === 1 && !item.children[0].children && !item.alwaysShow">
+            <template
+              v-if="
+                item.children.length === 1 &&
+                  !item.children[0].children &&
+                  !item.alwaysShow
+              "
+            >
               <el-menu-item
                 :index="item.path + '/' + item.children[0].path"
                 :key="item.path + '/' + item.children[0].path"
@@ -91,14 +101,15 @@ import variables from "@/styles/variables.scss";
 
 export default {
   name: "Sidebar",
-  components: { SidebarItem ,SidebarLogo },
+  components: { SidebarItem, SidebarLogo },
   computed: {
     // 左侧菜单展开的状态
     ...mapGetters(["sidebar", "theme", "navColor"]),
     // 获取静态路由列表（当没有设置用户权限时）
     routes() {
       // return this.$router.options.routes; // 无用户权限
-      return this.$store.getters.routes
+      console.log("左侧菜单", this.$store.getters.routes);
+      return this.$store.getters.routes;
     },
     // 获取路由列表中需要展开的菜单
     activeMenu() {
@@ -121,11 +132,11 @@ export default {
     // 是否水平折叠收起菜单
     isCollapse() {
       return !this.sidebar.opened;
-    }
+    },
   },
   mounted() {
     // console.log(this.$router);
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

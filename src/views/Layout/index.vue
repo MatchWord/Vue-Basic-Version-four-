@@ -2,19 +2,33 @@
   <!-- 动态绑定class名 -->
   <div :class="classObj" class="app-wrapper">
     <!-- 左侧的菜单栏 -->
-    <sidebar v-if="showNavMenu && mode === 'vertical'" class="sidebar-container" :style="{'background-color': navColor === 'dark' ? variables.menuBg : variables.menuBgligth}" />
+    <sidebar
+      v-if="showNavMenu && mode === 'vertical'"
+      class="sidebar-container"
+      :style="{
+        'background-color':
+          navColor === 'dark' ? variables.menuBg : variables.menuBgligth,
+      }"
+    />
     <!-- 右侧头部和内容 -->
     <!-- Element UI 隐藏滚动条el-scrollbar -->
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <div :class="{hasTagsView:tagsView, 'hasTagsViewHorizontal': mode === 'horizontal' && tagsView, 'noTagsViewHorizontal': mode === 'horizontal'}" class="main-container">
-        <div :class="{ 'fixed-header': fixedHeader}">
+      <div
+        :class="{
+          hasTagsView: tagsView,
+          hasTagsViewHorizontal: mode === 'horizontal' && tagsView,
+          noTagsViewHorizontal: mode === 'horizontal',
+        }"
+        class="main-container"
+      >
+        <div :class="{ 'fixed-header': fixedHeader }">
           <!-- 头部菜单栏 -->
           <sidebar-horizontal v-if="mode === 'horizontal'" />
           <navbar />
           <tags-view v-if="tagsView" />
         </div>
         <app-main />
-        <!-- <right-panel v-if="showSettings" >
+        <!-- <right-panel v-if="showSettings">
           <settings />
         </right-panel> -->
       </div>
@@ -39,7 +53,7 @@ import { mapGetters } from "vuex";
 // 引入css 变量 样式
 import variables from "@/styles/variables.scss";
 // 右侧设置面板
-import RightPanel from '@/components/RightPanel'
+import RightPanel from "@/components/RightPanel";
 // 引入左侧的菜单栏
 import sidebar from "./Components/Sidebar";
 // 引入Navbar 头部
@@ -47,43 +61,62 @@ import Navbar from "./Components/Navbar";
 // 引入主体内容
 import AppMain from "./Components/Appmain";
 // 引入TagsView
-import TagsView from "./Components/TagsView"
+import TagsView from "./Components/TagsView";
 // 引入settings
-import settings from "./Components/Settings"
+import settings from "./Components/Settings";
 // 引入头部的菜单栏
 import sidebarHorizontal from "./Components/sidebarHorizontal";
 // 引入遮罩层
-import GlobalMask from "./Components/BasicSetting/GlobalMask"
+import GlobalMask from "./Components/BasicSetting/GlobalMask";
 // 基础提示
-import NotificationBar from "./Components/BasicSetting/NotificationBar"
+import NotificationBar from "./Components/BasicSetting/NotificationBar";
 export default {
   name: "Layout",
-  components: { sidebar, Navbar, AppMain, TagsView, RightPanel, settings, sidebarHorizontal, GlobalMask, NotificationBar },
+  components: {
+    sidebar,
+    Navbar,
+    AppMain,
+    TagsView,
+    RightPanel,
+    settings,
+    sidebarHorizontal,
+    GlobalMask,
+    NotificationBar,
+  },
   computed: {
     // 使用对象展开运算符将此对象混入到外部对象中
-    ...mapGetters(["sidebar", "device", "fixedHeader", "tagsView", "showSettings", "showNavMenu", "navColor", "mode"]),
+    ...mapGetters([
+      "sidebar",
+      "device",
+      "fixedHeader",
+      "tagsView",
+      "showSettings",
+      "showNavMenu",
+      "navColor",
+      "mode",
+    ]),
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
-        hideNavMenu: !this.showNavMenu || this.mode === 'horizontal'
+        hideNavMenu: !this.showNavMenu || this.mode === "horizontal",
       };
     },
     // 样式变量
     variables() {
       return variables;
-    }
+    },
   },
-  data () {
+  data() {
     return {
       notificationInfo: {
         Width: 250,
         dark: true,
-        component: settings
-      }
-    }
+        component: settings,
+      },
+    };
   },
-  methods: {}
+  methods: {},
 };
 </script>
 
@@ -141,7 +174,7 @@ export default {
   }
 }
 // 不显示左侧菜单
-.hideNavMenu{
+.hideNavMenu {
   .main-container {
     margin-left: 0px;
     .fixed-header {
